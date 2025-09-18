@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+// #include<conio.h>
+
+struct node
+{
+    int info;
+    struct node *ptr;
+}*top,*top1,*temp;
+
+int c=0;
+void push(int data)
+{
+    if(top==NULL)
+    {
+        top=(struct node*)malloc(1*sizeof(struct node));
+        top->ptr=NULL;
+        top->info=data;
+    }
+    else
+    {
+        temp=(struct node*)malloc(1*sizeof(struct node));
+        temp->ptr=top;// ptr=next
+        temp->info=data;
+        top=temp;
+    }
+    c++;
+    printf("Item inserted\n");
+}
+
+int pop()	//pop() is int to return the 'popped' value
+{
+    top1=top;
+    if(top1==NULL)
+    {
+        printf("Stack Underflow\n");
+        return -1;
+    }
+    else
+    {
+        top1=top1->ptr;
+        int popped=top->info;
+        free(top);
+        top=top1;
+        c--;
+        return popped;
+    }
+}
+
+void display()
+{
+    top1=top;
+    if(top1==NULL)
+    {
+        printf("Stack Underflow\n");
+        return;
+    }
+    else
+    {
+        printf("\nStack:");
+        while(top1!=NULL)
+        {
+            printf("%d-->",top1->info);
+            top1=top1->ptr;
+        }
+        printf("NULL\n\n");
+    }
+}
+void main()
+{
+    int ch,val;
+   // clrscr();
+    printf("Stack using LL\n");
+    printf("--------------\n");
+    printf("1.Push\n2.Pop\n3.Display\n4.Exit\n");
+    
+    do
+    {
+    printf("enter your choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+        case 1:printf("\nenter value: ");
+        scanf("%d",&val);
+        push(val);
+        break;
+        case 2:printf("Popped element is %d\n",pop());
+        break;
+        case 3:display();
+        break;
+        case 4:exit(0);
+        break;
+        default:printf("\nWrong Choice??\n");
+    }
+    }while(ch!=4);
+    // getch();
+}

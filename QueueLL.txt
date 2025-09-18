@@ -1,0 +1,84 @@
+// QUEUE USING LINKED LIST
+
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *next;
+}*ptr,*temp,*front=NULL,*rear=NULL;
+int x;
+
+void enq(int x)
+{
+    ptr=(struct node*)malloc(sizeof(struct node));
+    ptr->data=x;
+    ptr->next=NULL;
+    if(front==NULL && rear==NULL)
+    {
+        front=rear=ptr;
+    }
+    else
+    {
+        rear->next=ptr;
+        rear=ptr;
+    }
+    printf("Element inserted\n");
+}
+
+int deq()
+{
+    temp=front;
+    if(front==NULL)
+    {
+        printf("Error:Underflow!\n");
+    }
+    else
+    {
+      temp=temp->next;
+      int popped=front->data;
+      free(front);
+      front=temp;
+      return popped;
+    }
+    printf("Element deleted");
+}
+
+void display()
+{
+    temp=front;
+    printf("Printing elements:\n");
+    while(temp!=NULL)
+    {
+        printf("%d\n",temp->data);
+        temp=temp->next;
+    }
+}
+
+void main()
+{
+    int ch,x;
+    do
+    {
+        printf("1.ENQUEUE\n2.DEQUEUE\n3.DISPLAY\n4.EXIT\n");
+        printf("Enter choice: ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+            printf("Enter the element to insert: ");
+            scanf("%d",&x);
+            enq(x);
+            break;
+            case 2:
+            printf("The popped element is %d\n",deq());
+            break;
+            case 3:
+            display();
+            break;
+            case 4:
+            exit(0);
+        }
+    }while(ch!=4);
+}
